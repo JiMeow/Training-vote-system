@@ -1,44 +1,58 @@
-<form (ngSubmit)="submit()">
+<form #form="ngForm" (ngSubmit)="!form.invalid && submit()">
   <div class="header-data">
     <div>/Create vote</div>
-    <button class="btn btn-outline-dark" type="submit">Create new</button>
+    <button class="btn btn-outline-dark" type="submit">
+      Create new
+    </button>
   </div>
+
   <div class="container-data">
     <div class="header-data">
-      <div>
-        Topic
-      </div>
-      <div>
-        {{ topicText.length }}/100
-      </div>
+      <div>Topic</div>
+      <div>{{ topicText.length }}/100</div>
     </div>
-    <textarea [(ngModel)]="topicText" class="topic-textarea" maxlength="100"
-              name="topicText" required type="text">
-  </textarea>
+    <textarea
+      [(ngModel)]="topicText"
+      class="topic-textarea"
+      maxlength="100"
+      name="topicText"
+      required>
+    </textarea>
+    <div *ngIf="form.controls['topicText']?.invalid && form.controls['topicText']?.touched">
+      <span class="error-message">Topic is required!</span>
+    </div>
   </div>
+
   <div class="container-data">
     <div class="header-data">
-      <div>
-        Description
-      </div>
-      <div>
-        {{ descriptionText.length }}/1000
-      </div>
+      <div>Description</div>
+      <div>{{ descriptionText.length }}/1000</div>
     </div>
-    <textarea [(ngModel)]="descriptionText" class="description-textarea"
-              maxlength="1000"
-              name="descriptionText" required type="text">
-  </textarea>
+    <textarea
+      [(ngModel)]="descriptionText"
+      class="description-textarea"
+      maxlength="1000"
+      name="descriptionText"
+      required>
+    </textarea>
+    <div *ngIf="form.controls['descriptionText']?.invalid && form.controls['descriptionText']?.touched">
+      <span class="error-message">Description is required!</span>
+    </div>
   </div>
+
   <div class="options-container">
-    <div class="options-header">
-      Options
-    </div>
+    <div class="options-header">Options</div>
     <div *ngFor="let option of options; let index=index">
-      <input [(ngModel)]="option.text" [name]="index.toString()" class="input-option" required/>
+      <input
+        [(ngModel)]="option.text"
+        [name]="'option' + index"
+        class="input-option"
+        required/>
+      <div *ngIf="form.controls['option' + index]?.invalid && form.controls['option' + index]?.touched">
+        <span class="error-message">Option {{ index + 1 }} is required!</span>
+      </div>
     </div>
     <svg (click)="addOption()" height="32" viewBox="0 0 512 512" width="32" xmlns="http://www.w3.org/2000/svg">
-      <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
       <path
         d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>
     </svg>

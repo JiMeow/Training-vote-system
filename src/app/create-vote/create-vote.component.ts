@@ -8,7 +8,10 @@ import {VoteOption, VoteService, VoteType} from "../services/vote.service";
 })
 export class CreateVoteComponent {
 
-  options: VoteOption[] = []
+  options: VoteOption[] = [{
+    text: '',
+    count: 0,
+  }]
   topicText = '';
   descriptionText = '';
 
