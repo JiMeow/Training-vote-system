@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {HomeComponent} from './home/home.component';
-import {CreateVoteComponent} from './modal/create-vote/create-vote.component';
+import {CreateVoteComponent} from './create-vote/create-vote.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";

@@ -74,21 +74,10 @@ export class VoteService {
     this.voteSubjects.next([...this.voteSubjects.getValue(), vote]);
   }
 
-  addNewVoteOption(id: string, newVoteOption: VoteOption) {
-    const idx = this.voteSubjects.value.findIndex((vote) => vote.id === id);
-    this.voteSubjects.value[idx].options.push(newVoteOption)
-
-    this.voteSubjects.next(this.voteSubjects.value)
-  }
-
   submitVote(id: string, voteIdx: number) {
     const idxVote = this.voteSubjects.value.findIndex((vote) => vote.id === id);
     this.voteSubjects.value[idxVote].options[voteIdx].count++;
 
     this.voteSubjects.next(this.voteSubjects.value)
-  }
-
-  getVote(id: string) {
-    return this.voteSubjects.getValue().find(v => v.id === id);
   }
 }

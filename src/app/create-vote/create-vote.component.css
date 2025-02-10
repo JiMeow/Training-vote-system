@@ -1,0 +1,44 @@
+.container-data {
+  display: flex;
+  flex-direction: column;
+  margin-block: 24px;
+  gap: 12px;
+  width: 100%;
+}
+
+.header-data {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.topic-textarea {
+  width: 100%;
+  height: 50px;
+  overflow-y: auto;
+}
+
+.description-textarea {
+  width: 100%;
+  height: 100px;
+  overflow-y: auto;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-block: 24px;
+}
+
+.options-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.input-option {
+  width: 100%;
+}
