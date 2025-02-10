@@ -1,0 +1,24 @@
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.body-header {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.overflow-option {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

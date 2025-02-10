@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Submit vote</h4>
+</div>
+<div class="modal-body">
+  <div class="body-header">
+    <div>
+      {{ vote.title }}
+    </div>
+    <div>
+      # All voter: {{ allVoteCount }}
+    </div>
+  </div>
+  <div class="options-container">
+    <div *ngFor="let option of vote.options" class="option-container">
+      <p class="w-25 overflow-option">
+        {{ option.text }}
+      </p>
+      <p class="w-75">
+        <ngb-progressbar [value]="option.count * 100 / allVoteCount" type="success"></ngb-progressbar>
+      </p>
+
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline-dark" type="submit">Submit</button>
+</div>
