@@ -1,15 +1,17 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {RouterLink, RouterOutlet} from "@angular/router";
-import { HomeComponent } from './home/home.component';
-import { CreateVoteComponent } from './create-vote/create-vote.component';
+import {HomeComponent} from './home/home.component';
+import {CreateVoteComponent} from './modal/create-vote/create-vote.component';
 import {AppRoutingModule} from "./app-routing.module";
-import { NavbarComponent } from './navbar/navbar.component';
+import {NavbarComponent} from './components/navbar/navbar.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import { VoteComponent } from './vote/vote.component';
-import { SubmitVoteFormComponent } from './submit-vote-form/submit-vote-form.component';
+import {VoteComponent} from './components/vote/vote.component';
+import {SubmitVoteFormComponent} from './modal/submit-vote-form/submit-vote-form.component';
+import {FormsModule} from "@angular/forms";
+import {VoteReportFormComponent} from './modal/vote-report-form/vote-report-form.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { SubmitVoteFormComponent } from './submit-vote-form/submit-vote-form.com
     NavbarComponent,
     VoteComponent,
     SubmitVoteFormComponent,
+    VoteReportFormComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -26,8 +29,10 @@ import { SubmitVoteFormComponent } from './submit-vote-form/submit-vote-form.com
     RouterLink,
     RouterOutlet,
     NgbModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

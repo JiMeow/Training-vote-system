@@ -1,7 +1,5 @@
-import {Component, TemplateRef} from '@angular/core';
-import {VoteService} from "../vote.service";
-import {VoteType} from "../vote/vote.component";
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component} from '@angular/core';
+import {VoteService, VoteType} from "../services/vote.service";
 
 @Component({
   selector: 'app-home',
@@ -11,15 +9,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class HomeComponent {
   votes: VoteType[] = [];
 
-  constructor(private voteService: VoteService, private modalService: NgbModal) {
+  constructor(private voteService: VoteService,) {
     this.voteService.votes.subscribe(votes => {
       this.votes = votes;
     });
-  }
-
-  open(content?: TemplateRef<any>) {
-    if (content) {
-      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
-    }
   }
 }

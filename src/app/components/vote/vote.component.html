@@ -1,0 +1,20 @@
+<div class="vote-component">
+  <div [className]="'vote-title' + (isLatest ? ' latest': '')">
+    {{ vote.id + " :  " + vote.title }}
+  </div>
+  <div (click)="open(voteSubmitForm)" [className]="'vote-action' + (isLatest ? ' latest': '')">
+    View
+  </div>
+  <div (click)="open(voteReportForm)" [className]="'vote-action' + (isLatest ? ' latest': '')">
+    Report
+  </div>
+</div>
+
+<ng-template #voteSubmitForm let-submit>
+  <app-submit-vote-form [modal]="submit" [vote]="vote"></app-submit-vote-form>
+</ng-template>
+
+<ng-template #voteReportForm let-report>
+  <app-vote-report-form [modal]="report" [vote]="vote"></app-vote-report-form>
+</ng-template>
+

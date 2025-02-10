@@ -1,0 +1,15 @@
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.body-header {
+  margin-bottom: 24px;
+}
