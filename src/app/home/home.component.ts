@@ -1,17 +1,20 @@
-import {Component} from '@angular/core';
-import {VoteService, VoteType} from "../services/vote.service";
+import {Component, OnInit} from '@angular/core';
+import {VoteService, VoteType} from '../services/vote.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   votes: VoteType[] = [];
 
-  constructor(private voteService: VoteService,) {
-    this.voteService.votes.subscribe(votes => {
-      this.votes = votes;
+  constructor(private voteService: VoteService) {
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.voteService.votes.subscribe((data) => {
+      this.votes = data;
     });
   }
 }

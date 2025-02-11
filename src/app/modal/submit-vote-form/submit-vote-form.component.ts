@@ -25,9 +25,9 @@ export class SubmitVoteFormComponent implements OnInit {
     this.selectedRadio = this.vote.options?.[0]
   }
 
-  submitResult(id: string) {
+  async submitResult() {
     const idx = this.vote.options.findIndex((option) => option === this.selectedRadio)
-    this.voteService.submitVote(id, idx);
+    await this.voteService.submitVote(this.vote, idx)
     this.modal.dismiss()
   }
 

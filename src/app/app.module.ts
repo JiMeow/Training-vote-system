@@ -13,6 +13,7 @@ import {SubmitVoteFormComponent} from './modal/submit-vote-form/submit-vote-form
 import {FormsModule} from "@angular/forms";
 import {VoteReportFormComponent} from './modal/vote-report-form/vote-report-form.component';
 import {VoteDescriptionComponent} from './modal/vote-description/vote-description.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {VoteDescriptionComponent} from './modal/vote-description/vote-descriptio
     RouterOutlet,
     NgbModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -20,7 +20,7 @@ export class CreateVoteComponent {
   }
 
   addVote(vote: VoteType) {
-    this.voteService.addVote(vote)
+    return this.voteService.addVote(vote)
   }
 
   addOption() {
@@ -39,9 +39,10 @@ export class CreateVoteComponent {
     this.descriptionText = '';
   }
 
-  submit() {
-    this.addVote({
-      id: this.voteService.generateVoteId(),
+  async submit() {
+    const voteId = await this.voteService.generateVoteId();
+    await this.addVote({
+      id: voteId,
       title: this.topicText,
       description: this.descriptionText,
       options: this.options

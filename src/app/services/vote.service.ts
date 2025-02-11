@@ -1,83 +1,72 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {HttpClient} from '@angular/common/http';
+import {firstValueFrom, BehaviorSubject, Observable} from 'rxjs';
 
 export type VoteOption = {
   text: string;
   count: number;
-}
+};
 
 export type VoteType = {
   id: string;
   title: string;
   description: string;
   options: VoteOption[];
-}
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoteService {
+  private votesSubject: BehaviorSubject<VoteType[]> = new BehaviorSubject<VoteType[]>([]);
+  public votes: Observable<VoteType[]> = this.votesSubject.asObservable();
+  private apiUrl = 'http://localhost:5227/api/vote';
 
-  voteSubjects = new BehaviorSubject<VoteType[]>([{
-    id: '1',
-    title: 'Vote 1',
-    description: 'Description 1',
-    options: [{
-      text: 'first choice',
-      count: 0,
-    }, {
-      text: 'second choice',
-      count: 0,
-    }, {
-      text: 'third choice',
-      count: 0,
-    }],
-  }, {
-    id: '2',
-    title: 'Vote 2',
-    description: 'Description 2',
-    options: [{
-      text: 'first choice',
-      count: 0,
-    }, {
-      text: 'second choice',
-      count: 0,
-    }, {
-      text: 'third choice',
-      count: 0,
-    }],
-  }, {
-    id: '3',
-    title: 'Vote 3',
-    description: 'Description 3',
-    options: [{
-      text: 'first choice',
-      count: 0,
-    }, {
-      text: 'second choice',
-      count: 0,
-    }, {
-      text: 'third choice',
-      count: 0,
-    }],
-  }]);
-  votes = this.voteSubjects.asObservable();
-
-  constructor() {
+  constructor(private http: HttpClient) {
+    void this.fetchVotes();
   }
 
-  generateVoteId() {
-    return (this.voteSubjects.value.length + 1).toString()
+  async generateVoteId(): Promise<string> {
+    const data = await this.getVotes();
+    return (data.length + 1).toString()
   }
 
-  addVote(vote: VoteType) {
-    this.voteSubjects.next([...this.voteSubjects.getValue(), vote]);
+  async getVotes(): Promise<VoteType[]> {
+    return firstValueFrom(this.getVotesService());
   }
 
-  submitVote(id: string, voteIdx: number) {
-    const idxVote = this.voteSubjects.value.findIndex((vote) => vote.id === id);
-    this.voteSubjects.value[idxVote].options[voteIdx].count++;
+  async addVote(vote: VoteType): Promise<VoteType> {
+    return firstValueFrom(this.addVoteService(vote)).then(async (data) => {
+      await this.fetchVotes(); // Refresh votes after adding
+      return data;
+    });
+  }
 
-    this.voteSubjects.next(this.voteSubjects.value)
+  async submitVote(vote: VoteType, voteIdx: number): Promise<VoteType> {
+    return firstValueFrom(this.submitVoteService(vote, voteIdx)).then(async (data) => {
+      await this.fetchVotes(); // Refresh votes after adding
+      return data;
+    });
+  }
+
+  getVotesService(): Observable<VoteType[]> {
+    return this.http.get<VoteType[]>(this.apiUrl);
+  }
+
+  addVoteService(vote: VoteType): Observable<VoteType> {
+    return this.http.post<VoteType>(`${this.apiUrl}/create`, vote);
+  }
+
+  submitVoteService(vote: VoteType, voteIdx: number): Observable<VoteType> {
+    return this.http.post<VoteType>(`${this.apiUrl}/increase/${voteIdx}`, vote);
+  }
+
+  private async fetchVotes() {
+    try {
+      const votes = await firstValueFrom(this.getVotesService());
+      this.votesSubject.next(votes); // Emit new votes to subscribers
+    } catch (error) {
+      console.error('Error fetching votes:', error);
+    }
   }
 }
