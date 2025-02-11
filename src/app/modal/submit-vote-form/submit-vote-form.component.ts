@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {VoteOption, VoteService, VoteType} from "../../services/vote.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-submit-vote-form',
@@ -17,7 +18,7 @@ export class SubmitVoteFormComponent implements OnInit {
 
   selectedRadio?: VoteOption
 
-  constructor(private voteService: VoteService) {
+  constructor(private voteService: VoteService, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -28,5 +29,11 @@ export class SubmitVoteFormComponent implements OnInit {
     const idx = this.vote.options.findIndex((option) => option === this.selectedRadio)
     this.voteService.submitVote(id, idx);
     this.modal.dismiss()
+  }
+
+  open(content?: TemplateRef<any>) {
+    if (content) {
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+    }
   }
 }

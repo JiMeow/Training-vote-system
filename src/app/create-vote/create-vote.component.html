@@ -1,7 +1,7 @@
 <form #form="ngForm" (ngSubmit)="!form.invalid && submit()">
   <div class="header-data">
     <div>/Create vote</div>
-    <button class="btn btn-outline-dark" type="submit">
+    <button [disabled]="form.invalid" class="btn btn-outline-dark" type="submit">
       Create new
     </button>
   </div>
@@ -48,7 +48,7 @@
         [name]="'option' + index"
         class="input-option"
         required/>
-      <div *ngIf="form.controls['option' + index]?.invalid && form.controls['option' + index]?.touched">
+      <div *ngIf="form.controls['option' + index]?.invalid">
         <span class="error-message">Option {{ index + 1 }} is required!</span>
       </div>
     </div>

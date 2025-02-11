@@ -1,0 +1,9 @@
+.body-header {
+  margin-bottom: 24px;
+}
+
+.description {
+  min-height: 160px;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+}

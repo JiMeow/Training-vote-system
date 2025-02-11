@@ -1,5 +1,6 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Submit vote</h4>
+  <h4 class="modal-title" id="modal-basic-title">Vote report</h4>
+  <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="btn-close" type="button"></button>
 </div>
 <div class="modal-body">
   <div class="body-header">
@@ -18,10 +19,6 @@
       <p class="w-75">
         <ngb-progressbar [value]="option.count * 100 / allVoteCount" type="success"></ngb-progressbar>
       </p>
-
     </div>
   </div>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-outline-dark" type="submit">Submit</button>
 </div>

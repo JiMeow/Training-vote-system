@@ -1,0 +1,5 @@
+<app-vote
+  *ngFor="let vote of votes; let index = index"
+  [isLatest]="votes.length - 1 === index"
+  [vote]="vote"
+  class="vote-component"/>

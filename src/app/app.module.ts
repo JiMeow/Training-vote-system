@@ -12,6 +12,7 @@ import {VoteComponent} from './components/vote/vote.component';
 import {SubmitVoteFormComponent} from './modal/submit-vote-form/submit-vote-form.component';
 import {FormsModule} from "@angular/forms";
 import {VoteReportFormComponent} from './modal/vote-report-form/vote-report-form.component';
+import {VoteDescriptionComponent} from './modal/vote-description/vote-description.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {VoteReportFormComponent} from './modal/vote-report-form/vote-report-form
     VoteComponent,
     SubmitVoteFormComponent,
     VoteReportFormComponent,
+    VoteDescriptionComponent,
   ],
   imports: [
     AppRoutingModule,

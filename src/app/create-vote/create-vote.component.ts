@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {VoteOption, VoteService, VoteType} from "../services/vote.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-vote',
@@ -15,7 +16,7 @@ export class CreateVoteComponent {
   topicText = '';
   descriptionText = '';
 
-  constructor(private voteService: VoteService) {
+  constructor(private voteService: VoteService, private router: Router) {
   }
 
   addVote(vote: VoteType) {
@@ -29,7 +30,23 @@ export class CreateVoteComponent {
     }]
   }
 
+  resetState() {
+    this.options = [{
+      text: '',
+      count: 0,
+    }]
+    this.topicText = '';
+    this.descriptionText = '';
+  }
+
   submit() {
-    console.log('submit data')
+    this.addVote({
+      id: this.voteService.generateVoteId(),
+      title: this.topicText,
+      description: this.descriptionText,
+      options: this.options
+    })
+    this.resetState();
+    void this.router.navigate(['/'])
   }
 }
