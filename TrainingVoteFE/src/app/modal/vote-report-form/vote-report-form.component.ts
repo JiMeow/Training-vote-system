@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {VoteService, VoteType} from "../../services/vote.service";
+import {VoteType} from "../../services/vote.service";
 
 @Component({
   selector: 'app-vote-report-form',
