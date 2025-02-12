@@ -1,36 +1,90 @@
-﻿using TrainingVoteBE.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using TrainingVoteBE.Data;
 
 namespace TrainingVoteBE.Repositories;
 
 public interface IVoteRepository
 {
-    VoteType EditVote(VoteType vote);
-    VoteType CreateVote(VoteType vote);
-    List<VoteType> GetVotes();
+    Task<VoteDto> EditVote(VoteDto vote);
+    Task<VoteDto> CreateVote(VoteDto vote);
+    Task<List<VoteDto>> GetVotes();
 }
 
-public class VoteRepository : IVoteRepository
+public class VoteRepository(VoteDbContext dbContext) : IVoteRepository
 {
-    private readonly List<VoteType> _dbVotes = new();
-
-    public VoteType CreateVote(VoteType vote)
+    public async Task<VoteDto> CreateVote(VoteDto vote)
     {
-        _dbVotes.Add(vote);
+        var existingVote = await dbContext.Votes.FindAsync(vote.Id);
+        if (existingVote != null)
+            return null; // or return Conflict if you want to send a 409 HTTP status
+
+        var newVote = new Vote
+        {
+            Id = vote.Id,
+            Title = vote.Title,
+            Description = vote.Description
+        };
+
+        await dbContext.Votes.AddAsync(newVote);
+
+        var voteOptions = vote.Options.Select(option => new VoteOption
+        {
+            Id = Guid.NewGuid().ToString(),
+            Text = option.Text,
+            Count = 0,
+            VoteId = vote.Id, // This establishes the relationship with the Vote
+            Vote = newVote // Link to the existing Vote
+        }).ToList();
+
+        await dbContext.VoteOptions.AddRangeAsync(voteOptions);
+
+        // Save all changes
+        await dbContext.SaveChangesAsync();
+
+        return new VoteDto
+        {
+            Id = newVote.Id,
+            Title = newVote.Title,
+            Description = newVote.Description,
+            Options = voteOptions.Select(o => new VoteOptionDto
+            {
+                Text = o.Text,
+                Count = o.Count
+            }).ToList()
+        };
+    }
+
+
+    public async Task<VoteDto> EditVote(VoteDto vote)
+    {
+        var _vote = await dbContext.Votes.FindAsync(vote.Id);
+        if (_vote == null) return null;
+
+        var optionsList = await dbContext.VoteOptions.Where(voteOption => voteOption.VoteId == vote.Id).ToListAsync();
+
+        for (var i = 0; i < optionsList.Count; i++) optionsList[i].Count = vote.Options[i].Count;
+
+        dbContext.VoteOptions.UpdateRange(optionsList);
+        await dbContext.SaveChangesAsync();
+
         return vote;
     }
 
-    public List<VoteType> GetVotes()
-    {
-        return _dbVotes;
-    }
 
-    public VoteType EditVote(VoteType _vote)
+    public async Task<List<VoteDto>> GetVotes()
     {
-        var vote = _dbVotes.Find(v => v.Id == _vote.Id);
-        if (vote == null) return null;
-        vote.Title = _vote.Title;
-        vote.Description = _vote.Description;
-        vote.Options = _vote.Options;
-        return vote;
+        return await dbContext.Votes
+            .Select(v => new VoteDto
+            {
+                Id = v.Id,
+                Title = v.Title,
+                Description = v.Description,
+                Options = v.Options.Select(o => new VoteOptionDto
+                {
+                    Text = o.Text,
+                    Count = o.Count
+                }).ToList()
+            })
+            .ToListAsync();
     }
 }

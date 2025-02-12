@@ -4,26 +4,29 @@ using TrainingVoteBE.Services;
 namespace TrainingVoteBE.Controllers;
 
 [ApiController]
-[Route("api/vote")]
+[Route("api/[controller]")]
 public class VoteController(IVoteService voteService) : Controller
 {
     [HttpGet]
-    public List<VoteType> GetVotes()
+    public async Task<ActionResult<List<VoteDto>>> GetVotes()
     {
-        return voteService.GetVotes();
+        var votes = await voteService.GetVotes();
+        return Ok(votes);
     }
 
     [HttpPost]
     [Route("create")]
-    public VoteType CreateVoteType([FromBody] VoteType vote)
+    public async Task<ActionResult<VoteDto>> CreateVote([FromBody] VoteDto vote)
     {
-        return voteService.CreateVote(vote);
+        var createdVote = await voteService.CreateVote(vote);
+        return Ok(createdVote);
     }
 
     [HttpPost]
     [Route("increase/{voteOptionIndex}")]
-    public VoteType IncreaseCount([FromBody] VoteType vote, int voteOptionIndex)
+    public async Task<ActionResult<VoteDto>> IncreaseCount([FromBody] VoteDto vote, int voteOptionIndex)
     {
-        return voteService.IncreaseCount(vote, voteOptionIndex);
+        var updatedVote = await voteService.IncreaseCount(vote, voteOptionIndex);
+        return Ok(updatedVote);
     }
 }

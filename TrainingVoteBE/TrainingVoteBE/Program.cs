@@ -1,15 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using TrainingVoteBE.Data;
 using TrainingVoteBE.Repositories;
 using TrainingVoteBE.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IVoteService, VoteService>();
-builder.Services.AddSingleton<VoteRepository>();
+builder.Services.AddScoped<IVoteService, VoteService>();
+builder.Services.AddScoped<VoteRepository>();
+
+builder.Services.AddDbContext<VoteDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -17,10 +20,13 @@ var app = builder.Build();
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) app.MapOpenApi();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
-
 app.MapControllers();
 
 app.Run();

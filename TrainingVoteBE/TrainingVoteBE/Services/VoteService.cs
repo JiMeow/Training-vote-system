@@ -2,47 +2,30 @@
 
 namespace TrainingVoteBE.Services;
 
-public class VoteOption
-{
-    public string Text { get; set; }
-    public int Count { get; set; }
-}
-
-public class VoteType
-{
-    public string Id { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public List<VoteOption> Options { get; set; }
-}
-
 public interface IVoteService
 {
-    VoteType CreateVote(VoteType vote);
-    List<VoteType> GetVotes();
-    VoteType IncreaseCount(VoteType vote, int voteOptionIndex);
+    Task<VoteDto> CreateVote(VoteDto vote);
+    Task<List<VoteDto>> GetVotes();
+    Task<VoteDto> IncreaseCount(VoteDto vote, int voteOptionIndex);
 }
 
 public class VoteService(VoteRepository voteRepository) : IVoteService
 {
-    public VoteType CreateVote(VoteType vote)
+    public async Task<VoteDto> CreateVote(VoteDto vote)
     {
-        voteRepository.CreateVote(vote);
+        await voteRepository.CreateVote(vote);
         return vote;
     }
 
-    public List<VoteType> GetVotes()
+    public async Task<List<VoteDto>> GetVotes()
     {
-        return voteRepository.GetVotes();
+        return await voteRepository.GetVotes();
     }
 
-    public VoteType IncreaseCount(VoteType vote, int voteOptionIndex)
+    public async Task<VoteDto> IncreaseCount(VoteDto vote, int voteOptionIndex)
     {
-        if (vote.Options.Count <= voteOptionIndex)
-            return null;
-
         vote.Options[voteOptionIndex].Count++;
-        voteRepository.EditVote(vote);
+        await voteRepository.EditVote(vote);
         return vote;
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jirat\\RiderProjects\\TrainingVoteBE\\TrainingVoteBE\\TrainingVoteBE.csproj": {}
+    "C:\\Users\\jirat\\เดสก์ท็อป\\Quantium\\Projects\\Training-vote-system\\TrainingVoteBE\\TrainingVoteBE\\TrainingVoteBE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jirat\\RiderProjects\\TrainingVoteBE\\TrainingVoteBE\\TrainingVoteBE.csproj": {
+    "C:\\Users\\jirat\\เดสก์ท็อป\\Quantium\\Projects\\Training-vote-system\\TrainingVoteBE\\TrainingVoteBE\\TrainingVoteBE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jirat\\RiderProjects\\TrainingVoteBE\\TrainingVoteBE\\TrainingVoteBE.csproj",
+        "projectUniqueName": "C:\\Users\\jirat\\เดสก์ท็อป\\Quantium\\Projects\\Training-vote-system\\TrainingVoteBE\\TrainingVoteBE\\TrainingVoteBE.csproj",
         "projectName": "TrainingVoteBE",
-        "projectPath": "C:\\Users\\jirat\\RiderProjects\\TrainingVoteBE\\TrainingVoteBE\\TrainingVoteBE.csproj",
+        "projectPath": "C:\\Users\\jirat\\เดสก์ท็อป\\Quantium\\Projects\\Training-vote-system\\TrainingVoteBE\\TrainingVoteBE\\TrainingVoteBE.csproj",
         "packagesPath": "C:\\Users\\jirat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jirat\\RiderProjects\\TrainingVoteBE\\TrainingVoteBE\\obj\\",
+        "outputPath": "C:\\Users\\jirat\\เดสก์ท็อป\\Quantium\\Projects\\Training-vote-system\\TrainingVoteBE\\TrainingVoteBE\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -54,6 +54,28 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[7.2.0, )"
             }
           },
           "imports": [
