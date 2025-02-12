@@ -16,7 +16,7 @@ public class VoteRepository(VoteDbContext dbContext) : IVoteRepository
     {
         var existingVote = await dbContext.Votes.FindAsync(vote.Id);
         if (existingVote != null)
-            return null; // or return Conflict if you want to send a 409 HTTP status
+            throw new Exception("Vote already exists");
 
         var newVote = new Vote
         {
@@ -58,7 +58,8 @@ public class VoteRepository(VoteDbContext dbContext) : IVoteRepository
     public async Task<VoteDto> EditVote(VoteDto vote)
     {
         var _vote = await dbContext.Votes.FindAsync(vote.Id);
-        if (_vote == null) return null;
+        if (_vote == null)
+            throw new Exception("Vote not found");
 
         var optionsList = await dbContext.VoteOptions.Where(voteOption => voteOption.VoteId == vote.Id).ToListAsync();
 

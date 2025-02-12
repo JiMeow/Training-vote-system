@@ -10,23 +10,44 @@ public class VoteController(IVoteService voteService) : Controller
     [HttpGet]
     public async Task<ActionResult<List<VoteDto>>> GetVotes()
     {
-        var votes = await voteService.GetVotes();
-        return Ok(votes);
+        try
+        {
+            var votes = await voteService.GetVotes();
+            return Ok(votes);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPost]
     [Route("create")]
     public async Task<ActionResult<VoteDto>> CreateVote([FromBody] VoteDto vote)
     {
-        var createdVote = await voteService.CreateVote(vote);
-        return Ok(createdVote);
+        try
+        {
+            var createdVote = await voteService.CreateVote(vote);
+            return Ok(createdVote);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPost]
     [Route("increase/{voteOptionIndex}")]
     public async Task<ActionResult<VoteDto>> IncreaseCount([FromBody] VoteDto vote, int voteOptionIndex)
     {
-        var updatedVote = await voteService.IncreaseCount(vote, voteOptionIndex);
-        return Ok(updatedVote);
+        try
+        {
+            var updatedVote = await voteService.IncreaseCount(vote, voteOptionIndex);
+            return Ok(updatedVote);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }
